@@ -8,6 +8,7 @@ import { Header } from 'antd/lib/layout/layout';
 // import components 
 import Flights from './Components/Flights'
 import Passengers from './Components/Passengers'
+import About from './Components/About';
 
 function App() {
   const {Header , Content , Footer} = Layout;
@@ -22,7 +23,8 @@ function App() {
      
       <Menu theme = "dark" mode="horizontal" >
         <Menu.Item key ="1"> <Link to="/flights">Flights</Link></Menu.Item>  
-       <Menu.Item key="2"> <Link to="/passengers">Passengers </Link></Menu.Item>  
+       <Menu.Item key="2"> <Link to="/passengers">Passengers </Link></Menu.Item> 
+       <Menu.Item key="3"> <Link to="/">About </Link></Menu.Item> 
       </Menu>
       
     </Header>
@@ -33,6 +35,7 @@ function App() {
           <Switch>
       <Route  path="/flights" component={Flights}  exact />
       <Route  path = "/passengers" component={Passengers} exact />
+      <Route  path = "/" component={About} exact />
       </Switch>
      
       </Content>

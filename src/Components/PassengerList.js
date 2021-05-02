@@ -10,40 +10,17 @@ class PassengerList extends React.Component {
             isModalVisible : false,
             data : []
         }
-    //this.getData = this.getData.bind(this)    
 
     }
 
-    showModal = (valueToPut) => {
-        this.setState({
-            isModalVisible : valueToPut
-        })
-    }
-
-  /**   getData = async()  => {
-       
-        const resp =   await fetch('http://localhost:8082/api/passengers')
-        const resoi =  await resp.json();
-        this.setState({
-            data : resoi
-        })} **/
-       
-        
-    componentDidMount() {
-      //this.getData();
-      dataFetch.then(res => res.json()).then(data => 
-        this.setState({
-            data :data
-        }))
-    } 
-    shouldComponentUpdate(newProps , newState) {
-        console.log("Triffed" + newState)
-        return true
-    }
-    
-    handleDelete  =(id) => (event) =>{
-        console.info("here")
-       
+     componentDidMount() {
+      
+    this.props.updateData() 
+   
+     }
+    handleDelete  =(id) =>{
+        deleteFetch(id);
+        window.location.reload(false)
     }
        
     render() {
@@ -83,7 +60,7 @@ class PassengerList extends React.Component {
                 dataIndex : 'passengerId',
                 key : 'passengerId',
                 render : userId => <Popconfirm
-                onConfirm = {() => deleteFetch(userId)}
+                onConfirm = {() => this.handleDelete(userId)}
                 okText = "Yes"
                 cancelText ="No"
                 title = "Are you sure you want to delete the passenger ?"
@@ -101,7 +78,7 @@ class PassengerList extends React.Component {
         ]
 
         return (
-            <Table dataSource={this.state.data} columns={columns} />
+            <Table dataSource={this.props.data} columns={columns} />
             )
     }
 }

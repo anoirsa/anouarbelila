@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import 'antd/dist/antd.css';
 import { layout, validateMessages, classOptions } from './reducers'
 import { Form, Input, Popconfirm, message, Select, InputNumber, Button } from 'antd'
+import {dataFetch} from './client'
+
 import PassengerList from './PassengerList'
 class Passengers extends React.Component {
     constructor(props) {
@@ -12,11 +14,18 @@ class Passengers extends React.Component {
             email: "",
             flightId: "",
             travelClass: "",
+            data : []
         }
         this.handleChage = this.handleChage.bind(this)
         this.selectHandleChange = this.selectHandleChange.bind(this)
+        this.updateData = this.updateData.bind(this)
     }
-
+    updateData() {
+        dataFetch.then(res => res.json()).then(data => 
+            this.setState({
+                data :data
+            }))
+    }
     submitForm = () =>  {
         var ourStatus = "";
         const {passengerName, phoneNumber , email , flightId  , travelClass} = this.state
@@ -31,6 +40,8 @@ class Passengers extends React.Component {
             ourStatus = res.status == 200 ? "Infromation inserted successfully" : "Error Please check"
             console.log(res.status)
             message.info(ourStatus)
+            window.location.reload(false)
+            
 
             })
         
@@ -87,6 +98,7 @@ class Passengers extends React.Component {
                         style={{ marginRight: '20px' }}
                     >
                         <Input
+                            placeholder = "Number must start with 0"
                             name='phoneNumber'
                             onChange={this.handleChage}
                             value={phoneNumber}
@@ -105,6 +117,7 @@ class Passengers extends React.Component {
                     </Form.Item>
 
                     <Form.Item
+                        placeholder ="Email must include @"
                         label='Email'
                         style={{ marginRight: '20px' }}
                         rules={
@@ -140,7 +153,7 @@ class Passengers extends React.Component {
                 </Form.Item>
                 </Form>
 
-                <PassengerList />
+                <PassengerList data ={this.state.data} updateData = {this.updateData}/>
 
             </div>
         )

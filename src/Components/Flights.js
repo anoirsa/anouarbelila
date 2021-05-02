@@ -25,13 +25,14 @@ function Flights() {
     const onSumbitForm = async() => {
        const body = {departure, arrival, flightTime};
         try {
-            const response = await fetch("http://localhost:8082/api/flights",{
+            const response = await fetch("http://e1800954timo.herokuapp.com/api/flights",{
                 method : "POST",
                 headers : {"Content-Type" : "application/json"},
                 body : JSON.stringify(body) }
             )
-        ourStatus = response.status == 200 ? "Infromation inserted successfully" : "Error Please check"
+        ourStatus = response.status == 200 ? "Information inserted successfully" : "Error DateFormat must be dd-MM-yyyy"
         message.info(ourStatus)
+        
             
         } catch (error) {
         message.info(error.message)    
@@ -90,6 +91,7 @@ function Flights() {
             style={{marginRight : "20px"}}
             >
           <Input
+            placeholder = "dd-MM-yyyy"
             type = "text"
             value = {flightTime}
             onChange = {e => setFlightTime(e.target.value)}
